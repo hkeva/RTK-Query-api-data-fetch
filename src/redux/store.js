@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import storeApiReducer from "./getData/getDataReducer"
-import globalStateReducer from "./globalState/globalStateReducer"
+import globalStateReducer from "./rootReducer"
 
 export const store = configureStore({
   reducer: {
