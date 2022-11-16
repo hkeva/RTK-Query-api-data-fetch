@@ -1,42 +1,41 @@
-import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { fetchData } from "./redux/getData/getDataActions"
+import { RotatingLines } from "react-loader-spinner"
 import "./App.css"
-import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
-import { setData } from "./redux/storeApiData"
 
 function App() {
-  const dispatch = useDispatch()
   const { data } = useSelector((state) => state.storeApi)
-
-  const [isDisplay, setIsDisplay] = useState(false)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts`
-        )
-
-        dispatch(setData(response.data))
-      } catch (err) {
-        throw new Error(err)
-      }
-    }
-
-    fetchData()
-  }, [])
+  const { isLoading, error } = useSelector((state) => state.globalState)
 
   return (
     <>
       <button
         style={{ margin: "30px", padding: "30px", fontSize: "18px" }}
         onClick={() => {
-          setIsDisplay(true)
+          fetchData()
         }}
       >
         Generate data
       </button>
-      {isDisplay &&
+
+      {data.length === 0 && isLoading && (
+        <div style={{ marginLeft: "30px" }}>
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        </div>
+      )}
+      {error && (
+        <div style={{ marginLeft: "30px", fontSize: "18px", color: "red" }}>
+          {error}
+        </div>
+      )}
+
+      {data &&
         data.map((singleData) => {
           return (
             <div
