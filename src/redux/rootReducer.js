@@ -1,23 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { combineReducers } from "redux"
+import storeApiReducer from "./getData/getDataSlice"
+import globalStateReducer from "./globalState/globalStateSlice"
 
-const initialState = {
-  isLoading: false,
-  error: "",
-}
-
-export const globalSlice = createSlice({
-  name: "globalState",
-  initialState,
-  reducers: {
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload
-    },
-    setError: (state, action) => {
-      state.error = action.payload
-    },
-  },
+const rootReducer = combineReducers({
+  storeApi: storeApiReducer,
+  globalState: globalStateReducer,
 })
 
-export const { setIsLoading, setError } = globalSlice.actions
-
-export default globalSlice.reducer
+export default rootReducer

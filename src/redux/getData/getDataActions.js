@@ -1,7 +1,7 @@
 import axios from "axios"
 import { store } from "../store"
-import { setData } from "./getDataReducer"
-import { setError, setIsLoading } from "../rootReducer"
+import { setData } from "./getDataSlice"
+import { setError, setIsLoading } from "../globalState/globalStateSlice"
 
 export const fetchData = async () => {
   try {
