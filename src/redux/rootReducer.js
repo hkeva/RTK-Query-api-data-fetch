@@ -1,10 +1,11 @@
 import { combineReducers } from "redux"
-import storeApiReducer from "./getData/getDataSlice"
-import globalStateReducer from "./globalState/globalStateSlice"
+import { getApiData } from "./getApi/getApiSlice"
 
 const rootReducer = combineReducers({
-  storeApi: storeApiReducer,
-  globalState: globalStateReducer,
+  [getApiData.reducerPath]: getApiData.reducer,
 })
+
+export const middleware = (getDefaultMiddleware) =>
+  getDefaultMiddleware().concat(getApiData.middleware)
 
 export default rootReducer

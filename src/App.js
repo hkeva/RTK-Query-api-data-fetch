@@ -1,24 +1,23 @@
-import { useSelector } from "react-redux"
-import { fetchData } from "./redux/getData/getDataActions"
+import { useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
-import "./App.css"
+import { useGetAllPostsQuery } from "./redux/getApi/getApiSlice"
 
 function App() {
-  const { data } = useSelector((state) => state.storeApi)
-  const { isLoading, error } = useSelector((state) => state.globalState)
+  const { data, isLoading, error } = useGetAllPostsQuery()
+  const [isDisplayed, setIsDisplayed] = useState(false)
 
   return (
     <>
       <button
         style={{ margin: "30px", padding: "30px", fontSize: "18px" }}
         onClick={() => {
-          fetchData()
+          setIsDisplayed(true)
         }}
       >
         Generate data
       </button>
 
-      {data.length === 0 && isLoading && (
+      {isDisplayed && isLoading && (
         <div style={{ marginLeft: "30px" }}>
           <RotatingLines
             strokeColor="grey"
@@ -29,13 +28,14 @@ function App() {
           />
         </div>
       )}
+
       {error && (
         <div style={{ marginLeft: "30px", fontSize: "18px", color: "red" }}>
           {error}
         </div>
       )}
 
-      {data &&
+      {isDisplayed &&
         data.map((singleData) => {
           return (
             <div
