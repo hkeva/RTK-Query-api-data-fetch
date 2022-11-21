@@ -1,10 +1,14 @@
 import { useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
 import { useGetAllPostsQuery } from "./redux/getApi/getApiSlice"
+import { useGetAllUsersQuery } from "./redux/getUserApi/getUserApiSlice"
 
 function App() {
   const { data, isLoading, error } = useGetAllPostsQuery()
   const [isDisplayed, setIsDisplayed] = useState(false)
+  const { data: userData } = useGetAllUsersQuery()
+
+  console.log(userData)
 
   return (
     <>
